@@ -1,0 +1,27 @@
+{
+  "name": "mbc-js-16-1-ipl-sql-jainshivsagar",
+  "version": "1.0.0",
+  "description": "IPL project using sql.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mountblue/mbc-js-16-1-ipl-sql-jainshivsagar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mountblue/mbc-js-16-1-ipl-sql-jainshivsagar/issues"
+  },
+  "homepage": "https://github.com/mountblue/mbc-js-16-1-ipl-sql-jainshivsagar#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "i": "^0.3.6",
+    "jest": "^27.0.5",
+    "pg": "^8.6.0",
+    "pg-format": "^1.0.4",
+    "winston": "^3.3.3"
+  }
+}
