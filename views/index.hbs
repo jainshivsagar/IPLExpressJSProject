@@ -1,0 +1,83 @@
+<div class="container" >
+    <header>
+        <h1> Welcome To Indian Premier League (IPL) Statatics (Data From Year 2008 To Year 2017)</h1>
+    </header>
+    <div class="table-div">
+        <h2>Matches Played Per Year</h2>
+        <table class="t1" style="width: 500px;" >
+            <tr>
+                <th>Season</th>
+                <th>No. Of Matches Played Per Year</th>
+            </tr>
+            <tr>
+                {{#matchesPlayedPerYear}}
+                <tr>
+                    <td>{{Season}}</td>
+                    <td>{{"No. Of Matches Played"}}</td>
+                </tr>
+            {{/matchesPlayedPerYear}}
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-2-root-container-div">
+        <h2 style="align-self: center;"> Matches Won Per Year</h2>
+        <div class="table-2-3-4-container-div">
+            {{#each matchesWonPerYear}}
+                <div class="table-2-div">
+                    <h2>{{@key}}</h2>
+                    <table class="t1">
+                        <tr>
+                            <th>Team</th>
+                            <th>No. Of Matches Won</th>
+                        </tr>
+                        {{#each this}}
+                        <tr>
+                            <td>{{Team}}</td>
+                            <td>{{"No. Of Matches Won"}}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="table-2-3-4-container-div">
+        <div class="table-div">
+            <h2>Extra Runs Conceded Per Team In Year 2016</h2>
+            <table class="t1" style="width: 500px;" >
+                <tr>
+                    <th>Team</th>
+                    <th>Total Runs Conceded</th>
+                </tr>
+                <tr>
+                    {{#extraRunsConcede}}
+                    <tr>
+                        <td>{{Team}}</td>
+                        <td>{{"Total Runs Conceded"}}</td>
+                    </tr>
+                {{/extraRunsConcede}}
+                </tr>
+            </table>
+        </div>
+
+        <div class="table-div">
+            <h2>Top Ten Economical Player Of Year 2015</h2>
+            <table class="t1" style="width: 500px;" >
+                <tr>
+                    <th>Player</th>
+                    <th>Economy</th>
+                </tr>
+                <tr>
+                    {{#topTenEconomicalPlayers}}
+                    <tr>
+                        <td>{{Player}}</td>
+                        <td>{{"Economy"}}</td>
+                    </tr>
+                {{/topTenEconomicalPlayers}}
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

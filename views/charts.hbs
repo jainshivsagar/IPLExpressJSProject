@@ -1,0 +1,218 @@
+<div class="container">
+<h1>Charts For IPL Statatics</h1>
+<div style=" width: 600px; margin-bottom:50px; display:flex; flex-direction:column">
+    <canvas id="matchesPlayedPerYearChart" >
+    </canvas>
+</div>
+<div class="charts-2-container-div">
+
+</div>
+<div style=" width: 600px;margin-bottom:50px; display:flex; flex-direction:column">
+    <canvas id="extraRunsConcededChart" >
+    </canvas>
+</div>
+
+<div style="width: 600px;margin-bottom:50px; display:flex; flex-direction:column">
+    <canvas id="topTenEconomicalBowlersChart">
+    </canvas>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.0/dist/chart.min.js">   
+</script>
+<script>
+    const BASE_URL="http://localhost:5000/";
+
+    const MATCHES_PLAYED_PER_YEAR_END_POINT="matches-played-perYear";
+    const MATCHES_WON_PER_YEAR_END_POINT="matches-won-per-year";
+    const EXTRA_RUNS_CONCEDED_PER_TEAM_END_POINT="extra-runs-concede-per-team";
+    const TOP_TEN_ECONOMICAL_BOWLERS_END_POINT="top-ten-economical-bowlers";
+
+    //Chart Config data
+    Chart.defaults.color="white";
+    Chart.defaults.font.family="Noto Sans JP, sans serif";
+    let backgroundColor = [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(201, 203, 207, 0.5)',
+                            'rgba(250, 97, 45, 0.5)',
+                            'rgba(80, 204, 13, 0.5)',
+                            'rgba(69, 37, 206, 0.5)',
+                        ];
+    let borderColor = [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)',
+                        'rgb(250, 97, 45)',
+                        'rgb(80, 204, 13)',
+                        'rgb(69, 37, 206)',
+                    ];
+                    
+    fetch(BASE_URL+MATCHES_PLAYED_PER_YEAR_END_POINT).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        const labels=[];
+        const dataValues=[];
+
+        data.forEach((obj)=>{
+            labels.push(obj.Season);
+            dataValues.push(obj['No. Of Matches Played']);
+        })
+        
+        const chartDataObj={
+            labels:labels,
+            datasets:[{
+                data:dataValues,
+                backgroundColor:backgroundColor,
+                borderColor:borderColor,
+                color:'rgb(69, 37, 206)',
+                borderWidth: 1
+            }]
+        }
+
+        const chartConfigObj={
+            type:"bar",
+            data: chartDataObj,
+            options:{
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Matches Played Per Year Chart'
+                    },
+                    legend:{
+                        display:false,
+                    },
+                }
+            }
+        }
+
+        //Render The Chart
+        let chartCanavas=document.getElementById('matchesPlayedPerYearChart').getContext('2d');
+        var myChart = new Chart(chartCanavas,chartConfigObj);
+
+    }).catch((error)=>{
+        console.log(error);
+    });
+
+    {{!-- fetch(BASE_URL+MATCHES_WON_PER_YEAR_END_POINT).then(response)=>{
+        return response.json();
+    }).then((data)=>{
+        const title=[];
+        let labels=null;
+        let dataValues=null;
+
+        for(let property in data){
+            title.push(property);
+        }
+
+       title.forEach((tempTitle)=>{
+           labels=[];
+           dataValues=[];
+           data[tempTitle].forEach((obj)=>{
+               labels.push(obj.Team);
+               dataValues.push(obj['No. Of Matches Won']);
+           });
+
+
+       });
+    }); --}}
+
+    fetch(BASE_URL+EXTRA_RUNS_CONCEDED_PER_TEAM_END_POINT).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        const labels=[];
+        const dataValues=[];
+
+        data.forEach((obj)=>{
+            labels.push(obj.Team);
+            dataValues.push(obj['Total Runs Conceded']);
+        })
+        
+        const chartDataObj={
+            labels:labels,
+            datasets:[{
+                data:dataValues,
+                backgroundColor:backgroundColor,
+                borderColor:borderColor,
+                borderWidth: 1
+            }]
+        }
+
+        const chartConfigObj={
+            type:"bar",
+            data: chartDataObj,
+            options:{
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Extra Runs Conceded Per Team In Year 2016'
+                    },
+                    legend:{
+                        display:false,
+                    }
+                }
+            }
+        }
+
+        //Render The Chart
+        let chartCanavas=document.getElementById('extraRunsConcededChart').getContext('2d');
+        var myChart = new Chart(chartCanavas,chartConfigObj);
+
+    }).catch((error)=>{
+        console.log(error);
+    });
+
+
+    fetch(BASE_URL+TOP_TEN_ECONOMICAL_BOWLERS_END_POINT).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        const labels=[];
+        const dataValues=[];
+
+        data.forEach((obj)=>{
+            labels.push(obj.Player);
+            dataValues.push(obj.Economy);
+        })
+        
+        const chartDataObj={
+            labels:labels,
+            datasets:[{
+                data:dataValues,
+                backgroundColor:backgroundColor,
+                borderColor:borderColor,
+                borderWidth: 1
+            }]
+        }
+
+        const chartConfigObj={
+            type:"bar",
+            data: chartDataObj,
+            options:{
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Top Ten Economical Player Of Year 2015'
+                    },
+                    legend:{
+                        display:false,
+                    }
+                }
+            }
+        }
+
+        //Render The Chart
+        let chartCanavas=document.getElementById('topTenEconomicalBowlersChart').getContext('2d');
+        var myChart = new Chart(chartCanavas,chartConfigObj);
+
+    }).catch((error)=>{
+        console.log(error);
+    });
+</script>

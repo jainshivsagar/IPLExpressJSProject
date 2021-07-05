@@ -13,7 +13,7 @@ async function getMatchesWonPerTeamPerYear(client) {
                        INNER JOIN matches_tbl AS m ON t.id=m.winner 
                        INNER JOIN season_tbl AS s on m.season=s.id 
                        GROUP BY s.season, t.name 
-                       ORDER BY t.name`;
+                       ORDER BY t.name, s.season`;
   return client.query(selectQuery);
 }
 
@@ -29,7 +29,7 @@ async function getExtraRunsConcededPerTeam(season, client) {
 }
 
 async function getTopTenEconomicalBowlers(season, client) {
-  const selectQuery = `SELECT p.name AS "Player", (sum(d.total_runs - d.bye_runs - leg_by_runs)*6.0::decimal/ count(d.ball) ) AS "Economy"
+  const selectQuery = `SELECT p.name AS "Player", round((sum(d.total_runs - d.bye_runs - leg_by_runs)*6.0::decimal/ count(d.ball) ),2) AS "Economy"
                        FROM deliveries_tbl AS d 
                        INNER JOIN player_tbl AS p ON d.bowler = p.id 
                        WHERE d.match_id in (SELECT id FROM matches_tbl WHERE season =(SELECT id FROM season_tbl WHERE season = ${season}))
